@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/new/ui">
+        <file>ui/4.gif</file>
+        <file>ui/1.png</file>
+        <file>ui/2.png</file>
+        <file>ui/3.png</file>
+        <file>ui/1.jpg</file>
+    </qresource>
+</RCC>
