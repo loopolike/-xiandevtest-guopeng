@@ -347,14 +347,11 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
     auto validateEdit = new DLineEdit();
     validateEdit->setFixedSize(250,80);
     validateEdit->setStyleSheet("font-size:48px;letter-spacing：17px");
-    //validateEdit;
 
     auto inforLabel = new DLabel(AssistanceWindow::tr("请在上方输入你想要帮助的人提供给你的验证码，完成后点击连接开始协助对方"));
     inforLabel->setWordWrap(true);
 
-    //validateEdit->setMaximumSize(6,1);
-
-        auto cancelBt = new DSuggestButton(AssistanceWindow::tr("取消"));
+    auto cancelBt = new DSuggestButton(AssistanceWindow::tr("取消"));
     cancelBt->connect(cancelBt, &DSuggestButton::clicked, q, [=]()
     {
         QString strCaBt = cancelBt->text();
@@ -619,10 +616,6 @@ AssistanceWindow::AssistanceWindow(QWidget *parent) :
     DThemeManager::registerWidget(this);
     stackMainWindows = new QStackedWidget(this);
     setCentralWidget(stackMainWindows);
-    //生成二维码图片
-    /*QRCodeLabel *qrCode = new QRCodeLabel;
-    qrCode->resize(130,130);
-    qrCode->generateQRCode(QString("www.baidu.com"));*/
 
     if (titlebar())
     {

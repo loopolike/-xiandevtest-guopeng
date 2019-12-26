@@ -80,14 +80,6 @@ private:
     QPixmap m_pixmap;
 };
 
-class QRCodeLabel: public QLabel
-{
-    Q_OBJECT
-
-public:
-    void generateQRCode(QString url);
-};
-
 class UpcaseValidator: public QValidator
 {
     Q_OBJECT
