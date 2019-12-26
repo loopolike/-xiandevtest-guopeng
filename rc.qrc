@@ -5,5 +5,7 @@
         <file>ui/2.png</file>
         <file>ui/3.png</file>
         <file>ui/1.jpg</file>
+        <file>ui/preference-system-32px.svg</file>
+        <file>ui/uos-win.svg</file>
     </qresource>
 </RCC>

@@ -132,6 +132,11 @@ QWidget *AssistanceWindowPrivate::createMainView()
 {
     Q_Q(AssistanceWindow);
     auto centralLayout = new DThinVBoxLayout();
+//    if (q->titlebar())
+//    {
+//        q->titlebar()->setFixedHeight(40);
+//        q->titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
+//    }
     auto mainFrame = new QWidget(q);
     mainFrame->setFixedSize(320,240);
     mainFrame->setStyleSheet("DFrame#mainFrame{border-width:1px;border-color:#767676;border-style:dotted;}");
@@ -147,7 +152,6 @@ QWidget *AssistanceWindowPrivate::createMainView()
     helpLable->setWordWrap(true);
     helpLable->setLineWidth(100);
     helpLable->setText(AssistanceWindow::tr("这是由deepin团队开发的远程协助应用，如果您在使用过程中遇到困难，或者有人求助于你，请点击下方的我要求助或帮助别人。"));
-
 
     auto helpBt = new DPushButton(AssistanceWindow::tr("我要求助"));
     QIcon heIco(QPixmap(":/new/ui/ui/2.png"));
@@ -171,6 +175,7 @@ QWidget *AssistanceWindowPrivate::createMainView()
         //qDebug() << q->size();
         q->titlebar()->setTitle(AssistanceWindow::tr("帮助别人"));
         q->stackMainWindows->setCurrentWidget(m_helpOtherView);
+
     });
 
     mainFrameLayout->addWidget(titleLable, 0, Qt::AlignCenter );
@@ -191,7 +196,17 @@ QWidget *AssistanceWindowPrivate::createNeedHelpView()
     auto mainFrame = new QWidget(q);
     mainFrame->setFixedSize(320,240);
     mainFrame->setStyleSheet("DFrame#mainFrame{border-width:1px;border-color:#767676;border-style:dotted;}");
-
+//    if (q->titlebar())
+//    {
+//            //initTitlebar();
+//         QPixmap iconPixmap = DHiDPIHelper::loadNxPixmap(":/new/ui/ui/2.png");
+//         QIcon fallback(iconPixmap);
+//         q->titlebar()->setIcon(QIcon(fallback));
+//         q->titlebar()->setSeparatorVisible(true);
+//         q->titlebar()->setFixedHeight(40);
+//         q->titlebar()->setTitle(AssistanceWindow::tr("我要求助"));
+//            //titlebar()->
+//     }
     auto mainFrameLayout = new DThinVBoxLayout();
 
 //    auto stateDSP = new DSpinner();//q
@@ -226,6 +241,8 @@ QWidget *AssistanceWindowPrivate::createNeedHelpView()
         q->titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
         q->stackMainWindows->setCurrentWidget(m_mainView);
         //m_waitTimer->stop();
+        m_waitTimer->stop();
+        g_nTimerTip = 0;
     });
     mainFrameLayout->addWidget(spin, 0, Qt::AlignCenter );
     //mainFrameLayout->addWidget(movieLable, 0, Qt::AlignCenter );
@@ -320,6 +337,7 @@ QWidget *AssistanceWindowPrivate::createNeedHelpCopyOverView()
         q->stackMainWindows->setCurrentWidget(m_mainView);
     });
 
+    //mainFrameLayout->setSpacing(-40);
     mainFrameLayout->addWidget(validateCodeLable, 0, Qt::AlignCenter);
     mainFrameLayout->addWidget(inforLable, 0, Qt::AlignCenter);
     mainFrameLayout->addWidget(inforLable2, 0, Qt::AlignCenter);
@@ -345,7 +363,7 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
     auto validateEdit = new DLineEdit();
     validateEdit->setFixedSize(250,80);
     validateEdit->setStyleSheet("font-size:48px;letter-spacing：17px");
-    validateEdit;
+    //validateEdit;
 
     auto inforLabel = new DLabel(AssistanceWindow::tr("请在上方输入你想要帮助的人提供给你的验证码，完成后点击连接开始协助对方"));
     inforLabel->setWordWrap(true);
@@ -373,7 +391,7 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
             {
                 //qDebug() << q->size();
                 DDialog popDlg;
-                //popDlg.setIcon(QIcon(":/view/resources/deepin-cloudprint-config-helper.svg"));
+                popDlg.setIcon(QIcon(":/new/ui/ui/uos-win.svg"));
                 auto *OKbt = new DSuggestButton(AssistanceWindow::tr("确定"));
                 auto *cancelbt = new DPushButton(AssistanceWindow::tr("返回"));
                 popDlg.insertButton(0, OKbt, true);
@@ -467,6 +485,8 @@ QWidget *AssistanceWindowPrivate::createHelpOtherToDesktopView()
         //qDebug() << q->size();
         q->titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
         q->stackMainWindows->setCurrentWidget(m_mainView);
+        m_waitTimer->stop();
+        g_nTimerTip = 0;
     });
 
     mainFrameLayout->addWidget(spin, 0, Qt::AlignCenter );
@@ -495,6 +515,8 @@ QWidget *AssistanceWindowPrivate::createHelpOtherSucceedView()
 
     auto inforLabel = new DLabel(AssistanceWindow::tr("您正在进行远程协助"));
     inforLabel->setWordWrap(true);
+    inforLabel->setStyleSheet("font-size:28px;letter-spacing：17px");
+
     auto inforLabel2 = new DLabel(AssistanceWindow::tr("当前已经有一个连接会话，如果您想建立新的连接，请先断开"));
     inforLabel2->setWordWrap(true);
 
@@ -618,14 +640,13 @@ AssistanceWindow::AssistanceWindow(QWidget *parent) :
 
     if (titlebar())
     {
-            //initTitlebar();
-    //        QPixmap iconPixmap = DHiDPIHelper::loadNxPixmap(":/view/resources/preference-system-32px.svg");
-    //       QIcon fallback(iconPixmap);
-    //        titlebar()->setIcon(QIcon(fallback));
-        //    titlebar()->setSeparatorVisible(true);
-            titlebar()->setFixedHeight(40);
-            titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
-            //titlebar()->
+           //initTitlebar();
+           QPixmap iconPixmap = DHiDPIHelper::loadNxPixmap(":/new/ui/ui/uos-win.svg");
+           QIcon fallback(iconPixmap);
+           titlebar()->setIcon(QIcon(fallback));
+           titlebar()->setSeparatorVisible(true);
+           titlebar()->setFixedHeight(40);
+           titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
      }
     //setAttribute(Qt::WA_DeleteOnClose);
     qApp->installEventFilter(this);
@@ -642,7 +663,6 @@ void AssistanceWindow::closeEvent(QCloseEvent *event)
 {
     //TODO: 在退出窗口之前，实现希望做的操作
     //hide();
-
 }
 
 void AssistanceWindow::updateProgress()

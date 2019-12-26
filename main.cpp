@@ -27,7 +27,7 @@ int main(int argc, char *argv[])
     //if (isUseSystemTry())
     {
         QPixmap pixmap;
-        pixmap.load(":/new/ui/ui/1.jpg");
+        pixmap.load(":/new/ui/ui/uos-win.svg");
 
         auto systemTray = new QSystemTrayIcon(pixmap, &app);
         systemTray->setToolTip(QSystemTrayIcon::tr("Activator"));
