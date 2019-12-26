@@ -1,3 +1,24 @@
+/*
+ * Copyright (C) 2011 ~ 2019 Deepin Technology Co., Ltd.
+ *
+ * Author:     guopeng <guopeng_cm@deepin.com>
+ *
+ * Maintainer: guopeng <guopeng_cm@deepin.com>
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 #include "assistancewindow.h"
 #include <QDebug>
 #include <QStack>
@@ -132,11 +153,7 @@ QWidget *AssistanceWindowPrivate::createMainView()
 {
     Q_Q(AssistanceWindow);
     auto centralLayout = new DThinVBoxLayout();
-//    if (q->titlebar())
-//    {
-//        q->titlebar()->setFixedHeight(40);
-//        q->titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
-//    }
+
     auto mainFrame = new QWidget(q);
     mainFrame->setFixedSize(320,240);
     mainFrame->setStyleSheet("DFrame#mainFrame{border-width:1px;border-color:#767676;border-style:dotted;}");
@@ -164,7 +181,6 @@ QWidget *AssistanceWindowPrivate::createMainView()
         q->stackMainWindows->setCurrentWidget(m_needHelpView);
         g_nTimerTip = 1;
         m_waitTimer->start(TIMERTIME2s);//&QTimer::timeout
-
     });
 
     auto helpOtherBt = new DPushButton(AssistanceWindow::tr("帮助别人"));
@@ -196,37 +212,11 @@ QWidget *AssistanceWindowPrivate::createNeedHelpView()
     auto mainFrame = new QWidget(q);
     mainFrame->setFixedSize(320,240);
     mainFrame->setStyleSheet("DFrame#mainFrame{border-width:1px;border-color:#767676;border-style:dotted;}");
-//    if (q->titlebar())
-//    {
-//            //initTitlebar();
-//         QPixmap iconPixmap = DHiDPIHelper::loadNxPixmap(":/new/ui/ui/2.png");
-//         QIcon fallback(iconPixmap);
-//         q->titlebar()->setIcon(QIcon(fallback));
-//         q->titlebar()->setSeparatorVisible(true);
-//         q->titlebar()->setFixedHeight(40);
-//         q->titlebar()->setTitle(AssistanceWindow::tr("我要求助"));
-//            //titlebar()->
-//     }
-    auto mainFrameLayout = new DThinVBoxLayout();
 
-//    auto stateDSP = new DSpinner();//q
-//    stateDSP->setBaseSize(20,20);
-//    stateDSP->setS
-////    stateDSP->setBackgroundColor(QColor(241,145,12,255));
-//    //stateDSP->setVisible(true);
-//    //stateDSP->
-//    //stateDSP->show();
-//    stateDSP->start();
-//    auto movie = new QMovie(":/new/ui/ui/4.gif");
-//    movie->setScaledSize(QSize(90, 90));//scaled(50, 50, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//    auto movieLable = new DLabel();
-//    //movieLable->setFixedSize(30,30);
-//    movieLable->setMovie(movie);
-//    movie->start();
+    auto mainFrameLayout = new DThinVBoxLayout();
     auto spin =new DSpinner();
     spin->start();
     spin->setFixedSize(50,50);
-    //qDebug() <<"stateDSP->isPlaying() "<<stateDSP->isPlaying();
 
     auto inforLable = new DLabel();
     inforLable->setText(AssistanceWindow::tr("正在生成请求验证码，请稍候..."));
@@ -249,8 +239,6 @@ QWidget *AssistanceWindowPrivate::createNeedHelpView()
     mainFrameLayout->addWidget(inforLable, 0, Qt::AlignCenter );
     mainFrameLayout->addWidget(createActions({cancelBt}), 0, Qt::AlignCenter);
 
-    //mainFrameLayout->addWidget(cancelBt, 0, Qt::AlignCenter );
-
     mainFrame->setLayout(mainFrameLayout);
     centralLayout->addWidget(mainFrame, 0, Qt::AlignCenter | Qt::AlignTop);
     return  wrapLayout(centralLayout);
@@ -265,9 +253,8 @@ QWidget *AssistanceWindowPrivate::createNeedHelpCopyView()
     mainFrame->setStyleSheet("DFrame#mainFrame{border-width:1px;border-color:#767676;border-style:dotted;}");
 
     auto mainFrameLayout = new DThinVBoxLayout();
-
     auto validateCodeLable = new DLabel();
-    validateCodeLable->setText("888888");
+    validateCodeLable->setText("000000");
     validateCodeLable->setStyleSheet("font-size:48px;letter-spacing：10px");
 
     validateCodeLable->setFixedSize(160,100);
@@ -277,7 +264,6 @@ QWidget *AssistanceWindowPrivate::createNeedHelpCopyView()
     auto inforLable = new DLabel();
     inforLable->setWordWrap(true);
     inforLable->setText(AssistanceWindow::tr("要开始共享您的桌面，请将上面的验证码提供给协助您的人员，他们输入验证码后，您的共享会话会立即开始"));
-
 
     auto copyBt = new DSuggestButton(AssistanceWindow::tr("复制"));
     copyBt->connect(copyBt, &DSuggestButton::clicked, q, [=]()
@@ -327,12 +313,10 @@ QWidget *AssistanceWindowPrivate::createNeedHelpCopyOverView()
     inforLable2->setWordWrap(true);
     inforLable2->setText(AssistanceWindow::tr("连接成功后此界面会自动隐藏到系统栏"));
 
-
     auto backBt = new DSuggestButton(AssistanceWindow::tr("返回"));
     backBt->connect(backBt, &DSuggestButton::clicked, q, [=]()
     {
         q->adjustSize();
-        //qDebug() << q->size();
         q->titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
         q->stackMainWindows->setCurrentWidget(m_mainView);
     });
@@ -370,8 +354,7 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
 
     //validateEdit->setMaximumSize(6,1);
 
-
-    auto cancelBt = new DSuggestButton(AssistanceWindow::tr("取消"));
+        auto cancelBt = new DSuggestButton(AssistanceWindow::tr("取消"));
     cancelBt->connect(cancelBt, &DSuggestButton::clicked, q, [=]()
     {
         QString strCaBt = cancelBt->text();
@@ -392,14 +375,16 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
                 //qDebug() << q->size();
                 DDialog popDlg;
                 popDlg.setIcon(QIcon(":/new/ui/ui/uos-win.svg"));
-                auto *OKbt = new DSuggestButton(AssistanceWindow::tr("确定"));
-                auto *cancelbt = new DPushButton(AssistanceWindow::tr("返回"));
-                popDlg.insertButton(0, OKbt, true);
-                popDlg.insertButton(0, cancelbt, true);
+                DSuggestButton popDlgOKbt(AssistanceWindow::tr("确定"));
+                DSuggestButton popDlgcancelbt(AssistanceWindow::tr("返回"));
+
+
+                popDlg.insertButton(0, &popDlgOKbt, true);
+                popDlg.insertButton(0, &popDlgcancelbt, true);
                 popDlg.setTitle(AssistanceWindow::tr("确定进行远程连接吗？"));
                 popDlg.setFixedSize(200,160);
 
-                OKbt->connect(OKbt, &DSuggestButton::clicked, q, [=]()
+                popDlgOKbt.connect(&popDlgOKbt, &DSuggestButton::clicked, q, [=]()
                 {
                     q->titlebar()->setTitle(AssistanceWindow::tr("帮助别人"));
                     q->stackMainWindows->setCurrentWidget(m_helpOtherToDesktopView);
@@ -407,7 +392,6 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
                     m_waitTimer->start(TIMERTIME5s);//&QTimer::timeout
                 });
                 popDlg.exec();
-
             }
             else
             {
@@ -507,7 +491,7 @@ QWidget *AssistanceWindowPrivate::createHelpOtherSucceedView()
     auto centralLayout = new DThinVBoxLayout();
 
     auto mainFrame = new QWidget(q);
-    mainFrame->setFixedSize(320,240);
+    mainFrame->setFixedSize(320, 240);
 
     mainFrame->setStyleSheet("DFrame#mainFrame{border-width:1px;border-color:#767676;border-style:dotted;}");
 
@@ -527,6 +511,8 @@ QWidget *AssistanceWindowPrivate::createHelpOtherSucceedView()
         //qDebug() << q->size();
         q->titlebar()->setTitle(AssistanceWindow::tr("远程协助"));
         q->stackMainWindows->setCurrentWidget(m_mainView);
+        g_nTimerTip = 0;
+        m_waitTimer->stop();//&QTimer::timeout
     });
 
     mainFrameLayout->addWidget(inforLabel, 0, Qt::AlignCenter );
