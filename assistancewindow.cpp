@@ -70,9 +70,9 @@ public:
     QWidget *createHelpOtherFailureView();
 
     QWidget *m_mainView           = Q_NULLPTR;
-    QMap<QString, QObject*> m_mainViewUiMap;
+    //QMap<QString, QObject*> m_mainViewUiMap;
     QWidget *m_needHelpView       = Q_NULLPTR;
-    QMap<QString, QObject*> m_needHelpViewUiMap;
+    //QMap<QString, QObject*> m_needHelpViewUiMap;
     QTimer  *m_waitTimer          = Q_NULLPTR;
 
     QWidget *m_needHelpCopyView       = Q_NULLPTR;
@@ -81,7 +81,7 @@ public:
     QWidget *m_needHelpCopyOverView       = Q_NULLPTR;
 
     QWidget *m_helpOtherView      = Q_NULLPTR;
-    QMap<QString, QObject*> m_helpOtherViewUiMap;
+    //QMap<QString, QObject*> m_helpOtherViewUiMap;
     QWidget *m_helpOtherToDesktopView      = Q_NULLPTR;
 
     QWidget *m_helpOtherSucceedView      = Q_NULLPTR;
@@ -251,7 +251,10 @@ QWidget *AssistanceWindowPrivate::createNeedHelpCopyView()
 
     auto validateCodeLable = new DLabel();
     validateCodeLable->setText("888888");
-    validateCodeLable->setStyleSheet("letter-spacing：10px");
+    validateCodeLable->setStyleSheet("font-size:48px;letter-spacing：10px");
+
+    validateCodeLable->setFixedSize(160,100);
+
     m_needHelpCopyViewUiMap.insert("validateCodeLable",validateCodeLable);
 
     auto inforLable = new DLabel();
@@ -295,7 +298,8 @@ QWidget *AssistanceWindowPrivate::createNeedHelpCopyOverView()
 
     auto validateCodeLable = new DLabel();
     validateCodeLable->setText("成功复制到粘贴板");
-    validateCodeLable->setStyleSheet("letter-spacing：17px");
+    validateCodeLable->setStyleSheet("font-size:36px;letter-spacing：17px");
+
     //m_needHelpCopyViewUiMap.insert("validateCodeLable",validateCodeLable);
 
     auto inforLable = new DLabel();
@@ -339,6 +343,10 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
 
     auto mainFrameLayout = new DThinVBoxLayout();
     auto validateEdit = new DLineEdit();
+    validateEdit->setFixedSize(250,80);
+    validateEdit->setStyleSheet("font-size:48px;letter-spacing：17px");
+    validateEdit;
+
     auto inforLabel = new DLabel(AssistanceWindow::tr("请在上方输入你想要帮助的人提供给你的验证码，完成后点击连接开始协助对方"));
     inforLabel->setWordWrap(true);
 
@@ -420,7 +428,7 @@ QWidget *AssistanceWindowPrivate::createHelpOtherView()
         }
         qDebug()<<" createHelpOtherView validateEdit:"<<keyText;
     });
-
+    mainFrameLayout->addSpacing(20);
     mainFrameLayout->addWidget(validateEdit, 0, Qt::AlignCenter );
     mainFrameLayout->addWidget(inforLabel, 0, Qt::AlignCenter );
     mainFrameLayout->addWidget(createActions({cancelBt}), 0, Qt::AlignCenter);
@@ -629,6 +637,7 @@ AssistanceWindow::~AssistanceWindow()
 {
 
 }
+
 void AssistanceWindow::closeEvent(QCloseEvent *event)
 {
     //TODO: 在退出窗口之前，实现希望做的操作

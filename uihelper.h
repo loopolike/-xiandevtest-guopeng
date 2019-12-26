@@ -9,8 +9,8 @@
 #include <QValidator>
 #include <QMouseEvent>
 
-const unsigned int TIMERTIME2s = 2000;
-const unsigned int TIMERTIME5s = 5000;
+const unsigned int TIMERTIME2s = 200;
+const unsigned int TIMERTIME5s = 500;
 
 class DThinVBoxLayout: public QVBoxLayout
 {
